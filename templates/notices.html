@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notices - Smart Student Portal</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>College Notices</h1>
+
+    <hr>
+
+    <h2>Add New Notice</h2>
+
+    <form method="POST">
+
+        <label>Notice Title:</label><br>
+        <input type="text"
+               name="title"
+               placeholder="Enter notice title"
+               required>
+
+        <br><br>
+
+        <label>Notice Message:</label><br>
+        <textarea name="message"
+                  placeholder="Enter notice message"
+                  rows="5"
+                  required></textarea>
+
+        <br><br>
+
+        <button type="submit">Add Notice</button>
+
+    </form>
+
+    <hr>
+
+    <h2>All Notices</h2>
+
+    {% if notices %}
+
+        {% for notice in notices %}
+
+            <div class="notice">
+
+                <h3>{{ notice.title }}</h3>
+
+                <p>{{ notice.message }}</p>
+
+                <small>
+                    Date: {{ notice.date }}
+                </small>
+                <br><br>
+
+<form method="POST"
+      action="{{ url_for('delete_notice', id=notice.id) }}">
+
+    <button type="submit">Delete Notice</button>
+
+</form>
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No notices available.</p>
+
+    {% endif %}
+
+    <br>
+
+    <a href="{{ url_for('admin_dashboard') }}">
+        Back to Dashboard
+    </a>
+
+</body>
+</html>

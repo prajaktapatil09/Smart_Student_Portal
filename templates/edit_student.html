@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Student</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎓 Smart Student Portal</div>
+
+    <nav>
+        <a href="/students">View Students</a>
+        <a href="/admin/dashboard">Dashboard</a>
+    </nav>
+</header>
+
+<section class="hero">
+
+    <h1>Edit Student</h1>
+
+    <form method="POST">
+
+        <p>
+            <input type="text" name="name"
+                   value="{{ student.name }}"
+                   placeholder="Student Name"
+                   required>
+        </p>
+
+        <p>
+            <input type="text" name="roll_no"
+                   value="{{ student.roll_no }}"
+                   placeholder="Roll Number"
+                   required>
+        </p>
+
+        <p>
+            <input type="text" name="student_class"
+                   value="{{ student.student_class }}"
+                   placeholder="Class"
+                   required>
+        </p>
+
+        <p>
+            <input type="text" name="department"
+                   value="{{ student.department }}"
+                   placeholder="Department"
+                   required>
+        </p>
+
+        <p>
+            <input type="email" name="email"
+                   value="{{ student.email or '' }}"
+                   placeholder="Email">
+        </p>
+
+        <p>
+            <input type="text" name="phone"
+                   value="{{ student.phone or '' }}"
+                   placeholder="Phone">
+        </p>
+
+        <p>
+            <input type="number" name="attendance"
+                   value="{{ student.attendance }}"
+                   placeholder="Attendance %"
+                   min="0" max="100">
+        </p>
+
+        <p>
+            <input type="number" name="internal_marks"
+                   value="{{ student.internal_marks }}"
+                   placeholder="Internal Marks">
+        </p>
+
+        <p>
+            <input type="number" name="exam_marks"
+                   value="{{ student.exam_marks }}"
+                   placeholder="Exam Marks">
+        </p>
+
+        <button type="submit">Update Student</button>
+
+    </form>
+
+</section>
+
+<footer>
+    <p>© 2026 AI Smart Student Management Portal</p>
+</footer>
+
+</body>
+</html>

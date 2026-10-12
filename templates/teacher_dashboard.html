@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | Smart Student Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f6fc;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            color: #0f766e;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #0f766e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 22px;
+        }
+
+        .welcome {
+            background: linear-gradient(120deg, #0f766e, #14b8a6);
+            color: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 28px rgba(15,118,110,0.18);
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #ecfdf5;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            font-size: 23px;
+            margin: 28px 0 18px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 23px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.04);
+        }
+
+        .stat-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h2 {
+            color: #0f766e;
+            font-size: 30px;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 17px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.04);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 16px;
+            background: #0f766e;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #115e59;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f0fdfa;
+            color: #115e59;
+            font-size: 14px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .notice {
+            padding: 17px;
+            border-left: 4px solid #14b8a6;
+            background: #f0fdfa;
+            border-radius: 8px;
+            margin-top: 14px;
+        }
+
+        .notice h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .notice p {
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .empty {
+            color: #64748b;
+            padding: 15px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 35px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 22px;
+            }
+
+            .welcome {
+                padding: 25px 21px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .navbar {
+                padding: 17px 5%;
+            }
+
+            .nav-links a {
+                margin-left: 0;
+                margin-right: 14px;
+            }
+
+            .panel {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">🎓 Smart Student Portal</div>
+
+    <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/teacher/add-notice">Add Notice</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <h1>Welcome, Teacher! 👩‍🏫</h1>
+        <p>
+            Manage student records, monitor academic performance
+            and keep track of college notices in one place.
+        </p>
+    </section>
+
+    <h2 class="section-title">Class Overview</h2>
+
+    <section class="stats">
+        <div class="stat-card">
+            <p>Total Students</p>
+            <h2>{{ students|length }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Student Records</p>
+            <h2>📚</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Academic Monitoring</p>
+            <h2>📊</h2>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2 class="section-title" style="margin-top:0">
+            👨‍🎓 Student Records
+        </h2>
+
+        <form class="search-form" action="/teacher/search" method="GET">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search by student name or roll number..."
+                value="{{ search|default('') }}"
+            >
+            <button class="btn" type="submit">Search</button>
+            <a class="btn" href="/teacher/dashboard">Show All</a>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll No.</th>
+                        <th>Student Name</th>
+                        <th>Class</th>
+                        <th>Department</th>
+                        <th>Attendance</th>
+                        <th>Internal Marks</th>
+                        <th>Exam Marks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.roll_no }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.student_class }}</td>
+                        <td>{{ student.department }}</td>
+                        <td>{{ student.attendance }}%</td>
+                        <td>{{ student.internal_marks }}</td>
+                        <td>{{ student.exam_marks }}</td>
+                        <td>
+                            <a class="btn"
+                               href="{{ url_for('teacher_edit_student', id=student.id) }}">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8">No student records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2 class="section-title" style="margin-top:0">
+            📢 College Notices
+        </h2>
+
+        {% for notice in notices|default([]) %}
+        <div class="notice">
+            <h3>{{ notice.title }}</h3>
+            <p>{{ notice.message }}</p>
+            <p><small>Date: {{ notice.date }}</small></p>
+        </div>
+        {% else %}
+        <p class="empty">No notices available right now.</p>
+        {% endfor %}
+    </section>
+
+</main>
+
+<footer>
+    © 2026 AI Smart Student Management Portal | Teacher Dashboard
+</footer>
+
+</body>
+</html>

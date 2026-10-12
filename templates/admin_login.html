@@ -1,0 +1,67 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Smart Portal</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body {
+            min-height: 100vh; display: flex; align-items: center;
+            justify-content: center; padding: 20px;
+            background: linear-gradient(135deg, #172554, #2563eb, #7c3aed);
+        }
+        .login-box {
+            width: 100%; max-width: 420px; background: white;
+            padding: 38px 32px; border-radius: 18px;
+            box-shadow: 0 20px 55px #0003;
+        }
+        .icon {
+            width: 72px; height: 72px; display: grid;
+            place-items: center; margin: 0 auto 20px;
+            border-radius: 20px; background: #dbeafe; font-size: 35px;
+        }
+        h1 { text-align: center; color: #172554; font-size: 27px; }
+        .subtitle { text-align: center; color: #64748b; margin: 10px 0 28px; line-height: 1.5; }
+        label { display: block; font-weight: bold; font-size: 14px; margin: 17px 0 8px; color: #334155; }
+        input {
+            width: 100%; padding: 13px 14px; border: 1px solid #cbd5e1;
+            border-radius: 9px; font-size: 15px; outline: none;
+        }
+        input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px #2563eb20; }
+        button {
+            width: 100%; padding: 14px; border: 0; border-radius: 9px;
+            background: #2563eb; color: white; font-size: 16px;
+            font-weight: bold; margin-top: 25px; cursor: pointer;
+        }
+        button:hover { background: #1d4ed8; }
+        .back { display: block; text-align: center; margin-top: 22px; color: #2563eb; text-decoration: none; }
+        .back:hover { text-decoration: underline; }
+        footer { text-align: center; margin-top: 25px; color: #94a3b8; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="icon">🛠️</div>
+        <h1>Admin Login</h1>
+        <p class="subtitle">Sign in to manage your student portal.</p>
+
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"
+                   placeholder="Enter username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"
+                   placeholder="Enter password" required>
+
+            <button type="submit">Login as Admin →</button>
+        </form>
+
+        <a class="back" href="{{ url_for('home') }}">← Back to Home</a>
+        <footer>© 2026 AI Smart Student Management Portal</footer>
+    </div>
+</body>
+</html>
+```
