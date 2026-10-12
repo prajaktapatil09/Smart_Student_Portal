@@ -1,0 +1,66 @@
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Roll No.</th>
+        <th>Internal Marks</th>
+        <th>Exam Marks</th>
+        <th>Total Marks</th>
+        <th>Percentage</th>
+        <th>Performance</th>
+        <th>Update</th>
+    </tr>
+
+    {% for student in students %}
+
+    {% set total = student.internal_marks + student.exam_marks %}
+    {% set percentage = (total / 200) * 100 %}
+
+    <tr>
+        <td>{{ student.name }}</td>
+        <td>{{ student.roll_no }}</td>
+
+        <form method="POST" action="{{ url_for('update_marks', id=student.id) }}">
+
+            <td>
+                <input type="number"
+                       name="internal_marks"
+                       value="{{ student.internal_marks }}"
+                       min="0"
+                       max="100"
+                       step="0.01"
+                       required>
+            </td>
+
+            <td>
+                <input type="number"
+                       name="exam_marks"
+                       value="{{ student.exam_marks }}"
+                       min="0"
+                       max="100"
+                       step="0.01"
+                       required>
+            </td>
+
+            <td>{{ total }}</td>
+
+            <td>{{ "%.2f"|format(percentage) }}%</td>
+
+            <td>
+                {% if percentage >= 75 %}
+                    <strong>Excellent</strong>
+                {% elif percentage >= 50 %}
+                    <strong>Average</strong>
+                {% else %}
+                    <strong>Needs Improvement</strong>
+                {% endif %}
+            </td>
+
+            <td>
+                <button type="submit">Update</button>
+            </td>
+
+        </form>
+    </tr>
+
+    {% endfor %}
+</table>

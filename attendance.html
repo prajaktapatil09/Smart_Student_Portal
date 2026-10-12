@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Management</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .low {
+            color: red;
+            font-weight: bold;
+        }
+
+        .good {
+            color: green;
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎓 Smart Student Portal</div>
+
+    <nav>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/students">Students</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h1>📊 Attendance Management</h1>
+
+    <a class="back" href="/admin/dashboard">
+        ← Back to Dashboard
+    </a>
+
+    {% if students %}
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Roll No.</th>
+            <th>Class</th>
+            <th>Department</th>
+            <th>Attendance</th>
+            <th>Status</th>
+        </tr>
+
+        {% for student in students %}
+
+        <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.roll_no }}</td>
+            <td>{{ student.student_class }}</td>
+            <td>{{ student.department }}</td>
+
+            <td>
+                {{ student.attendance }}%
+            </td>
+
+            <td>
+                {% if student.attendance < 75 %}
+                    <span class="low">⚠ Low Attendance</span>
+                {% else %}
+                    <span class="good">✓ Good</span>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <h3>No students found.</h3>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Students</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .container {
+            width: 95%;
+            margin: 40px auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .search-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            padding: 12px;
+            width: 300px;
+        }
+
+        .search-box button {
+            padding: 12px 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎓 Smart Student Portal</div>
+
+    <nav>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h1>All Students</h1>
+
+    <div class="search-box">
+
+        <form action="/search" method="GET">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Search by Name or Roll No."
+                value="{{ search|default('') }}"
+            >
+
+            <button type="submit">Search</button>
+
+        </form>
+
+    </div>
+
+    {% if students %}
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Roll No.</th>
+            <th>Class</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Attendance</th>
+            <th>Internal Marks</th>
+            <th>Exam Marks</th>
+            <th>Action</th>
+        </tr>
+
+        {% for student in students %}
+
+        <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.roll_no }}</td>
+            <td>{{ student.student_class }}</td>
+            <td>{{ student.department }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.phone }}</td>
+            <td>{{ student.attendance }}%</td>
+            <td>{{ student.internal_marks }}</td>
+            <td>{{ student.exam_marks }}</td>
+            
+            <td>
+               <a href="/edit_student/{{ student.id }}">Edit</a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <h3>No students found.</h3>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

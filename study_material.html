@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Material</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            width: 85%;
+            margin: 30px auto;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #1e3a8a;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            height: 90px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .material {
+            background: #f8fafc;
+            padding: 18px;
+            margin-top: 15px;
+            border-left: 5px solid #2563eb;
+            border-radius: 6px;
+        }
+
+        .material h3 {
+            margin-top: 0;
+            color: #1e3a8a;
+        }
+
+        .material a {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Study Material</h1>
+        <a href="/admin/dashboard" class="back">← Admin Dashboard</a>
+    </div>
+
+    <div class="container">
+
+        <div class="box">
+
+            <h2>Add Study Material</h2>
+
+            <form method="POST">
+
+                <label>Subject</label>
+                <input type="text" name="subject" placeholder="Example: Python" required>
+
+                <label>Material Title</label>
+                <input type="text" name="title" placeholder="Example: Python Functions" required>
+
+                <label>Description</label>
+                <textarea
+                    name="description"
+                    placeholder="Enter study material description"
+                    required
+                ></textarea>
+
+                <label>Study Link</label>
+                <input
+                    type="url"
+                    name="link"
+                    placeholder="https://example.com"
+                >
+
+                <button type="submit">
+                    Add Material
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="box">
+
+            <h2>Available Study Material 📚</h2>
+
+            {% if materials %}
+
+                {% for material in materials %}
+
+                <div class="material">
+
+                    <h3>{{ material.title }}</h3>
+
+                    <p>
+                        <strong>Subject:</strong>
+                        {{ material.subject }}
+                    </p>
+
+                    <p>
+                        {{ material.description }}
+                    </p>
+
+                    {% if material.link %}
+                        <a href="{{ material.link }}" target="_blank">
+                            Open Study Material
+                        </a>
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No study material available.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

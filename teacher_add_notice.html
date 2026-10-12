@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Notice</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        .form-box,
+        .notice-box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 120px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .notice {
+            border-left: 5px solid #2563eb;
+            padding: 15px;
+            margin-top: 15px;
+            background: #f8fafc;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>📢 Add College Notice</h1>
+
+        <a href="/teacher/dashboard" class="back">
+            ← Teacher Dashboard
+        </a>
+
+    </div>
+
+    <div class="container">
+
+        <div class="form-box">
+
+            <h2>Create New Notice</h2>
+
+            <form method="POST">
+
+                <label>Notice Title</label>
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter notice title"
+                    required
+                >
+
+                <label>Message</label>
+
+                <textarea
+                    name="message"
+                    placeholder="Enter notice message"
+                    required
+                ></textarea>
+
+                <label>Date</label>
+
+                <input
+                    type="date"
+                    name="date"
+                    required
+                >
+
+                <button type="submit">
+                    📢 Publish Notice
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="notice-box">
+
+            <h2>Recent Notices</h2>
+
+            {% if notices %}
+
+                {% for notice in notices %}
+
+                    <div class="notice">
+
+                        <h3>{{ notice.title }}</h3>
+
+                        <p>{{ notice.message }}</p>
+
+                        <small>
+                            📅 {{ notice.date }}
+                        </small>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No notices available.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>
