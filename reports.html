@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Reports</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .student-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        .student-card h2 {
+            color: #1e3a8a;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #eef6ff;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>📊 Student Reports</h1>
+
+        <a href="/admin/dashboard" class="back">
+            ← Admin Dashboard
+        </a>
+    </div>
+
+    <div class="container">
+        <button onclick="window.print()">
+    🖨️ Print Report
+</button>
+
+        {% if students %}
+
+            {% for student in students %}
+
+            {% set total = student.internal_marks + student.exam_marks %}
+            {% set percentage = (total / 100) * 100 %}
+
+            <div class="student-card">
+
+                <h2>{{ student.name }}</h2>
+
+                <p>
+                    <strong>Roll No:</strong>
+                    {{ student.roll_no }}
+                </p>
+
+                <p>
+                    <strong>Class:</strong>
+                    {{ student.student_class }}
+                </p>
+
+                <p>
+                    <strong>Department:</strong>
+                    {{ student.department }}
+                </p>
+
+                <table>
+
+                    <tr>
+                        <th>Attendance</th>
+                        <th>Internal Marks</th>
+                        <th>Exam Marks</th>
+                        <th>Total Marks</th>
+                        <th>Percentage</th>
+                        <th>Performance</th>
+                    </tr>
+
+                    <tr>
+                        <td>{{ student.attendance }}%</td>
+                        <td>{{ student.internal_marks }}</td>
+                        <td>{{ student.exam_marks }}</td>
+                        <td>{{ total }}</td>
+                        <td>{{ percentage }}%</td>
+{% if percentage >= 80 %}
+    <td>Excellent</td>
+{% elif percentage >= 50 %}
+    <td>Good</td>
+{% else %}
+    <td>Needs Improvement</td>
+{% endif %}
+                    </tr>
+
+                </table>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No student records found.</p>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
