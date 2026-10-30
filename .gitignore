@@ -4,3 +4,7 @@ __pycache__/
 .venv/
 venv/
 instance/
+
+students.db
+__pycache__/
+*.pyc

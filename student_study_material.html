@@ -1,143 +1,251 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Study Material</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study Materials</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
+        * {
+            box-sizing: border-box;
         }
 
-        .header {
-            background: #2563eb;
-            color: white;
-            padding: 20px 40px;
+        body {
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            color: #243b64;
         }
 
         .container {
-            width: 85%;
-            margin: 30px auto;
+            max-width: 1200px;
+            margin: auto;
         }
 
-        .search-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #1d4ed8, #4338ca);
+            color: white;
+            padding: 30px 15px;
+            border-radius: 14px;
             margin-bottom: 25px;
         }
 
-        input {
-            width: 70%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+        header h1 {
+            margin: 0 0 10px;
         }
 
-        button {
-            padding: 12px 20px;
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button, .btn {
+            display: inline-block;
             background: #2563eb;
             color: white;
+            padding: 11px 17px;
             border: none;
-            border-radius: 6px;
+            border-radius: 7px;
+            text-decoration: none;
             cursor: pointer;
+            font-size: 14px;
         }
 
-        .material {
+        button:hover, .btn:hover {
+            background: #1e40af;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
             background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-left: 5px solid #2563eb;
-            border-radius: 8px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            padding: 23px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000012;
+            text-align: center;
+            transition: 0.2s;
         }
 
-        .material h3 {
-            color: #1e3a8a;
-            margin-top: 0;
+        .card:hover {
+            transform: translateY(-4px);
         }
 
-        .material a {
-            color: #2563eb;
-            font-weight: bold;
+        .icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            color: #1d4ed8;
+            margin: 8px 0;
+        }
+
+        .card p {
+            color: #64748b;
+            min-height: 40px;
         }
 
         .back {
-            color: white;
+            display: inline-block;
+            margin-top: 30px;
+            color: #1d4ed8;
             text-decoration: none;
+            font-weight: bold;
+        }
+
+        .no-results {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 12px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 
 <body>
+<div class="container">
 
-    <div class="header">
-        <h1>📚 Study Material</h1>
-        <a href="/student/dashboard" class="back">
-            ← Student Dashboard
-        </a>
-    </div>
+    <header>
+        <h1>📚 Student Study Materials</h1>
+        <p>Explore subjects and improve your knowledge</p>
+    </header>
 
-    <div class="container">
+    <form class="search-box" method="GET"
+          action="{{ url_for('student_study_material') }}">
 
-        <div class="search-box">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search your subject..."
+            value="{{ search }}"
+        >
 
-            <h2>Search Study Material 🔎</h2>
+        <button type="submit">Search</button>
+    </form>
 
-            <form method="GET" action="/student/study-material">
+    {% if search %}
+        <h2>Search Results: {{ search }}</h2>
 
-                <input
-                    type="text"
-                    name="q"
-                    value="{{ search }}"
-                    placeholder="Search by subject or material name"
-                >
-
-                <button type="submit">
-                    Search
-                </button>
-
-            </form>
-
-        </div>
-
-        <h2>Available Study Material 📖</h2>
-
-        {% if materials %}
-
+        <section class="cards">
             {% for material in materials %}
+                <article class="card">
+                    <div class="icon">📖</div>
+                    <h3>{{ material.subject }}</h3>
+                    <h4>{{ material.title }}</h4>
+                    <p>{{ material.description }}</p>
 
-            <div class="material">
-
-                <h3>{{ material.title }}</h3>
-
-                <p>
-                    <strong>Subject:</strong>
-                    {{ material.subject }}
-                </p>
-
-                <p>
-                    {{ material.description }}
-                </p>
-
-                {% if material.link %}
-                    <a href="{{ material.link }}" target="_blank">
-                        Open Study Material
-                    </a>
-                {% endif %}
-
-            </div>
-
+                    {% if material.link %}
+                        <a class="btn"
+                           href="{{ material.link }}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Open Material →
+                        </a>
+                    {% endif %}
+                </article>
+            {% else %}
+                <div class="no-results">
+                    <h3>No Materials Found</h3>
+                    <p>Try searching another subject.</p>
+                </div>
             {% endfor %}
+        </section>
 
-        {% else %}
+        <a class="back"
+           href="{{ url_for('student_study_material') }}">
+            ← View All Subjects
+        </a>
 
-            <p>No study material found.</p>
+    {% else %}
 
-        {% endif %}
+        {% set subjects = [
+            "Python",
+            "Java",
+            "C Programming",
+            "C++ Programming",
+            "Web Development",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "DBMS",
+            "SQL",
+            "Data Structures",
+            "Algorithms",
+            "Operating System",
+            "Computer Networks",
+            "Software Engineering",
+            "Machine Learning",
+            "Artificial Intelligence",
+            "Data Science",
+            "Cyber Security",
+            "Cloud Computing",
+            "Computer Graphics",
+            "Linux",
+            "PHP",
+            "Android Development",
+            "Big Data"
+        ] %}
 
-    </div>
+       <h2>Explore {{ subjects|length }} Subjects</h2>
 
+<section class="cards">
+
+    {% for subject in subjects %}
+
+        <article class="card">
+            <div class="icon">📚</div>
+
+            <h3>{{ subject }}</h3>
+
+            <p>
+                Explore {{ subject }} study materials,
+                notes and learning resources.
+            </p>
+
+            <a class="btn"
+               href="{{ url_for('student_study_material', q=subject) }}">
+                View Materials →
+            </a>
+        </article>
+
+    {% endfor %}
+
+</section>
+
+{% endif %}
+
+    <a class="back"
+       href="{{ url_for('student_dashboard') }}">
+        ← Back to Student Dashboard
+    </a>
+
+</div>
 </body>
 </html>

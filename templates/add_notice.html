@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add College Notice</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Add College Notice</h1>
+
+    <form action="{{ url_for('add_notice') }}" method="POST">
+        <p>
+            <input type="text" name="title"
+                   placeholder="Notice Title" required>
+        </p>
+
+        <p>
+            <textarea name="message"
+                      placeholder="Notice Message"
+                      rows="6" required></textarea>
+        </p>
+
+        <button type="submit">Add Notice</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('admin_dashboard') }}">
+            Back to Admin Dashboard
+        </a>
+    </p>
+
+</body>
+</html>
+```

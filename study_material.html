@@ -1,80 +1,64 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Study Material</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study Material</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
             background: #f4f7fb;
             margin: 0;
+            color: #263248;
         }
 
-        .header {
+        header {
             background: #2563eb;
             color: white;
-            padding: 20px 40px;
+            padding: 20px 5%;
         }
 
         .container {
-            width: 85%;
+            width: 90%;
+            max-width: 1100px;
             margin: 30px auto;
         }
 
-        .box {
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            display: block;
             background: white;
             padding: 25px;
             border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: #263248;
+            box-shadow: 0 3px 12px #00000010;
+            border: 1px solid #e2e8f0;
         }
 
-        h2 {
+        .card:hover {
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
             color: #1e3a8a;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        textarea {
-            height: 90px;
-        }
-
-        button {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .material {
-            background: #f8fafc;
-            padding: 18px;
-            margin-top: 15px;
-            border-left: 5px solid #2563eb;
-            border-radius: 6px;
-        }
-
-        .material h3 {
-            margin-top: 0;
-            color: #1e3a8a;
-        }
-
-        .material a {
-            color: #2563eb;
-            font-weight: bold;
         }
 
         .back {
+            display: inline-block;
+            margin-top: 25px;
+            background: #2563eb;
             color: white;
+            padding: 12px 18px;
+            border-radius: 6px;
             text-decoration: none;
         }
     </style>
@@ -82,88 +66,49 @@
 
 <body>
 
-    <div class="header">
-        <h1>Study Material</h1>
-        <a href="/admin/dashboard" class="back">← Admin Dashboard</a>
-    </div>
+<header>
+    <h1>📚 Student Study Material</h1>
+    <p>Welcome to the Study Material section.</p>
+</header>
 
-    <div class="container">
+<div class="container">
 
-        <div class="box">
+    <h2>Computer Science</h2>
 
-            <h2>Add Study Material</h2>
+    <div class="subjects">
 
-            <form method="POST">
+        <a class="card"
+           href="{{ url_for('student_study_material', subject='Python Programming') }}">
+            <h3>🐍 Python Programming</h3>
+            <p>Learn Python programming concepts and functions.</p>
+        </a>
 
-                <label>Subject</label>
-                <input type="text" name="subject" placeholder="Example: Python" required>
+        <a class="card"
+           href="{{ url_for('student_study_material', subject='Java Programming') }}">
+            <h3>☕ Java Programming</h3>
+            <p>Explore Java classes, objects and inheritance.</p>
+        </a>
 
-                <label>Material Title</label>
-                <input type="text" name="title" placeholder="Example: Python Functions" required>
+        <a class="card"
+           href="{{ url_for('student_study_material', subject='Database Management System (DBMS)') }}">
+            <h3>🗄️ Database Management System (DBMS)</h3>
+            <p>Study databases, SQL queries and relationships.</p>
+        </a>
 
-                <label>Description</label>
-                <textarea
-                    name="description"
-                    placeholder="Enter study material description"
-                    required
-                ></textarea>
-
-                <label>Study Link</label>
-                <input
-                    type="url"
-                    name="link"
-                    placeholder="https://example.com"
-                >
-
-                <button type="submit">
-                    Add Material
-                </button>
-
-            </form>
-
-        </div>
-
-
-        <div class="box">
-
-            <h2>Available Study Material 📚</h2>
-
-            {% if materials %}
-
-                {% for material in materials %}
-
-                <div class="material">
-
-                    <h3>{{ material.title }}</h3>
-
-                    <p>
-                        <strong>Subject:</strong>
-                        {{ material.subject }}
-                    </p>
-
-                    <p>
-                        {{ material.description }}
-                    </p>
-
-                    {% if material.link %}
-                        <a href="{{ material.link }}" target="_blank">
-                            Open Study Material
-                        </a>
-                    {% endif %}
-
-                </div>
-
-                {% endfor %}
-
-            {% else %}
-
-                <p>No study material available.</p>
-
-            {% endif %}
-
-        </div>
+        <a class="card"
+           href="{{ url_for('student_study_material', subject='Artificial Intelligence and Machine Learning') }}">
+            <h3>🤖 Artificial Intelligence and Machine Learning</h3>
+            <p>Explore AI and machine learning fundamentals.</p>
+        </a>
 
     </div>
+
+    <a class="back" href="{{ url_for('student_dashboard') }}">
+        ← Back to Student Dashboard
+    </a>
+
+</div>
 
 </body>
 </html>
+```

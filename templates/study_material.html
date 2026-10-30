@@ -1,169 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Study Material</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Study Material - Admin</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
+        * {
+            box-sizing: border-box;
         }
 
-        .header {
-            background: #2563eb;
-            color: white;
-            padding: 20px 40px;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 25px;
+            color: #243b64;
         }
 
         .container {
-            width: 85%;
-            margin: 30px auto;
+            max-width: 900px;
+            margin: auto;
         }
 
-        .box {
+        h1, h2 {
+            text-align: center;
+        }
+
+        .form-box, .material-card {
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            padding: 22px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         }
 
-        h2 {
-            color: #1e3a8a;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        textarea {
-            height: 90px;
-        }
-
-        button {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .material {
-            background: #f8fafc;
-            padding: 18px;
-            margin-top: 15px;
-            border-left: 5px solid #2563eb;
-            border-radius: 6px;
-        }
-
-        .material h3 {
-            margin-top: 0;
-            color: #1e3a8a;
-        }
-
-        .material a {
-            color: #2563eb;
+        label {
+            display: block;
+            margin-top: 14px;
+            margin-bottom: 6px;
             font-weight: bold;
         }
 
-        .back {
+        input, textarea, select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: #243b64;
             color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #172747;
+        }
+
+        .material-card h3 {
+            margin-top: 0;
+            color: #243b64;
+        }
+
+        .material-card p {
+            color: #475569;
+            overflow-wrap: anywhere;
+        }
+
+        .material-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: #2563eb;
+            overflow-wrap: anywhere;
+        }
+
+        .back {
+            display: inline-block;
+            margin: 15px 0;
             text-decoration: none;
+            color: #243b64;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            color: #64748b;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>Study Material</h1>
-        <a href="/admin/dashboard" class="back">← Admin Dashboard</a>
-    </div>
+<div class="container">
 
-    <div class="container">
+    <h1>📚 Admin Study Material</h1>
+    <p style="text-align:center;">
+        Add and manage student study materials.
+    </p>
 
-        <div class="box">
+    <a class="back" href="{{ url_for('admin_dashboard') }}">
+        ← Back to Admin Dashboard
+    </a>
 
-            <h2>Add Study Material</h2>
+    <div class="form-box">
+        <h2>Add Study Material</h2>
 
-            <form method="POST">
+<form method="POST" action="{{ url_for('admin_study_material') }}">
 
-                <label>Subject</label>
-                <input type="text" name="subject" placeholder="Example: Python" required>
+    <label for="subject">Subject</label>
+    <select id="subject" name="subject" required>
+        <option value="">Select Subject</option>
+        <option value="Python Programming">Python Programming</option>
+        <option value="Java Programming">Java Programming</option>
+        <option value="Database Management System (DBMS)">
+            Database Management System (DBMS)
+        </option>
+        <option value="Artificial Intelligence and Machine Learning">
+            Artificial Intelligence and Machine Learning
+        </option>
+    </select>
 
-                <label>Material Title</label>
-                <input type="text" name="title" placeholder="Example: Python Functions" required>
+    <label for="title">Material Title</label>
+    <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Enter material title"
+        required
+    >
 
-                <label>Description</label>
-                <textarea
-                    name="description"
-                    placeholder="Enter study material description"
-                    required
-                ></textarea>
+    <label for="description">Description</label>
+    <textarea
+        id="description"
+        name="description"
+        placeholder="Enter material description"
+        required
+    ></textarea>
 
-                <label>Study Link</label>
-                <input
-                    type="url"
-                    name="link"
-                    placeholder="https://example.com"
-                >
+    <label for="link">Study Material Link</label>
+    <input
+        type="url"
+        id="link"
+        name="link"
+        placeholder="Enter study material URL"
+    >
 
-                <button type="submit">
-                    Add Material
-                </button>
+    <button type="submit">Add Study Material</button>
 
-            </form>
-
-        </div>
-
-
-        <div class="box">
-
-            <h2>Available Study Material 📚</h2>
-
-            {% if materials %}
-
-                {% for material in materials %}
-
-                <div class="material">
-
-                    <h3>{{ material.title }}</h3>
-
-                    <p>
-                        <strong>Subject:</strong>
-                        {{ material.subject }}
-                    </p>
-
-                    <p>
-                        {{ material.description }}
-                    </p>
-
-                    {% if material.link %}
-                        <a href="{{ material.link }}" target="_blank">
-                            Open Study Material
-                        </a>
-                    {% endif %}
-
-                </div>
-
-                {% endfor %}
-
-            {% else %}
-
-                <p>No study material available.</p>
-
-            {% endif %}
-
-        </div>
+</form>
 
     </div>
+
+    <h2>Available Study Materials</h2>
+
+    {% if materials %}
+
+        {% for material in materials %}
+
+            <div class="material-card">
+
+                <h3>{{ material.title }}</h3>
+
+                <p>
+                    <strong>Subject:</strong>
+                    {{ material.subject }}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    {{ material.description }}
+                </p>
+
+                {% if material.link %}
+                    <a
+                        class="material-link"
+                        href="{{ material.link }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open Study Material
+                    </a>
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p class="empty">No study materials available yet.</p>
+
+    {% endif %}
+
+</div>
 
 </body>
 </html>

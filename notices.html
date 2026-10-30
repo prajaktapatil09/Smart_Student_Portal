@@ -1,85 +1,146 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Notices - Smart Student Portal</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Notices</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+            color: #263238;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #00000012;
+        }
+
+        h1 {
+            color: #183b65;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .notice {
+            border: 1px solid #dce4ee;
+            border-left: 5px solid #183b65;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 18px;
+            background: #fafcff;
+        }
+
+        .notice h2 {
+            color: #183b65;
+            font-size: 20px;
+            margin: 0 0 10px;
+        }
+
+        .date {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .message {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 20px;
+            background: #183b65;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .btn:hover { background: #102947; }
+    </style>
 </head>
 
 <body>
+<div class="container">
 
     <h1>College Notices</h1>
-
-    <hr>
-
-    <h2>Add New Notice</h2>
-
-    <form method="POST">
-
-        <label>Notice Title:</label><br>
-        <input type="text"
-               name="title"
-               placeholder="Enter notice title"
-               required>
-
-        <br><br>
-
-        <label>Notice Message:</label><br>
-        <textarea name="message"
-                  placeholder="Enter notice message"
-                  rows="5"
-                  required></textarea>
-
-        <br><br>
-
-        <button type="submit">Add Notice</button>
-
-    </form>
-
-    <hr>
-
-    <h2>All Notices</h2>
+    <div class="subtitle">
+        Latest announcements and college updates
+    </div>
+    {% if session.get('admin_logged_in') %}
+<div class="buttons">
+    <a href="{{ url_for('add_notice') }}" class="btn">
+        + Add New Notice
+    </a>
+</div>
+{% endif %}
 
     {% if notices %}
-
         {% for notice in notices %}
+        <div class="notice">
+            <h2>{{ notice.title }}</h2>
 
-            <div class="notice">
-
-                <h3>{{ notice.title }}</h3>
-
-                <p>{{ notice.message }}</p>
-
-                <small>
-                    Date: {{ notice.date }}
-                </small>
-                <br><br>
-
-<form method="POST"
-      action="{{ url_for('delete_notice', id=notice.id) }}">
-
-    <button type="submit">Delete Notice</button>
-
-</form>
-
+            <div class="date">
+                Date: {{ notice.date }}
             </div>
 
-            <hr>
-
+            <div class="message">{{ notice.message }}</div>
+        </div>
         {% endfor %}
-
     {% else %}
-
-        <p>No notices available.</p>
-
+        <div class="empty">
+            <h3>No Notices Available</h3>
+            <p>College announcements will appear here.</p>
+        </div>
     {% endif %}
 
-    <br>
+    <div class="buttons">
+        <a href="{{ url_for('home') }}" class="btn">
+            Home
+        </a>
 
-    <a href="{{ url_for('admin_dashboard') }}">
-        Back to Dashboard
-    </a>
+        {% if session.get('admin_logged_in') %}
+            <a href="{{ url_for('admin_dashboard') }}" class="btn">
+                Admin Dashboard
+            </a>
+        {% endif %}
 
+        {% if session.get('teacher_logged_in') %}
+            <a href="{{ url_for('teacher_dashboard') }}" class="btn">
+                Teacher Dashboard
+            </a>
+        {% endif %}
+    </div>
+
+</div>
 </body>
 </html>
+```

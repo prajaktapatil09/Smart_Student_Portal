@@ -1,66 +1,227 @@
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Roll No.</th>
-        <th>Internal Marks</th>
-        <th>Exam Marks</th>
-        <th>Total Marks</th>
-        <th>Percentage</th>
-        <th>Performance</th>
-        <th>Update</th>
-    </tr>
 
-    {% for student in students %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks & Performance</title>
 
-    {% set total = student.internal_marks + student.exam_marks %}
-    {% set percentage = (total / 200) * 100 %}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    <tr>
-        <td>{{ student.name }}</td>
-        <td>{{ student.roll_no }}</td>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 25px;
+            background-color: #f4f6f9;
+            color: #333;
+        }
 
-        <form method="POST" action="{{ url_for('update_marks', id=student.id) }}">
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
 
-            <td>
-                <input type="number"
-                       name="internal_marks"
-                       value="{{ student.internal_marks }}"
-                       min="0"
-                       max="100"
-                       step="0.01"
-                       required>
-            </td>
+        h1 {
+            text-align: center;
+            color: #243b64;
+            margin-bottom: 25px;
+        }
 
-            <td>
-                <input type="number"
-                       name="exam_marks"
-                       value="{{ student.exam_marks }}"
-                       min="0"
-                       max="100"
-                       step="0.01"
-                       required>
-            </td>
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
 
-            <td>{{ total }}</td>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
 
-            <td>{{ "%.2f"|format(percentage) }}%</td>
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
 
-            <td>
-                {% if percentage >= 75 %}
-                    <strong>Excellent</strong>
-                {% elif percentage >= 50 %}
-                    <strong>Average</strong>
+        th {
+            background-color: #243b64;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fc;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+        }
+
+        .update-btn {
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .update-btn:hover {
+            background-color: #146c43;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 11px 18px;
+            background-color: #243b64;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover {
+            background-color: #182944;
+        }
+
+        .excellent {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .average {
+            color: #d18b00;
+            font-weight: bold;
+        }
+
+        .improvement {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Marks &amp; Performance</h1>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll No.</th>
+                    <th>Internal Marks (100)</th>
+                    <th>Exam Marks (100)</th>
+                    <th>Total Marks (200)</th>
+                    <th>Percentage</th>
+                    <th>Performance</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for student in students %}
+
+                {% set total = student.internal_marks + student.exam_marks %}
+                {% set percentage = (total / 200) * 100 %}
+
+                <tr>
+                    <td>
+                        <form id="update-form-{{ student.id }}"
+                              method="POST"
+                              action="{{ url_for('update_marks', id=student.id) }}">
+                        </form>
+
+                        {{ student.name }}
+                    </td>
+
+                    <td>{{ student.roll_no }}</td>
+
+                    <td>
+                        <input
+                            form="update-form-{{ student.id }}"
+                            type="number"
+                            name="internal_marks"
+                            value="{{ student.internal_marks }}"
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            required>
+                    </td>
+
+                    <td>
+                        <input
+                            form="update-form-{{ student.id }}"
+                            type="number"
+                            name="exam_marks"
+                            value="{{ student.exam_marks }}"
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            required>
+                    </td>
+
+                    <td>{{ "%.2f"|format(total) }}</td>
+
+                    <td>{{ "%.2f"|format(percentage) }}%</td>
+
+                    <td>
+                        {% if percentage >= 75 %}
+                            <span class="excellent">Excellent</span>
+                        {% elif percentage >= 50 %}
+                            <span class="average">Average</span>
+                        {% else %}
+                            <span class="improvement">Needs Improvement</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <button
+                            form="update-form-{{ student.id }}"
+                            type="submit"
+                            class="update-btn">
+                            Update
+                        </button>
+                    </td>
+                </tr>
+
                 {% else %}
-                    <strong>Needs Improvement</strong>
-                {% endif %}
-            </td>
 
-            <td>
-                <button type="submit">Update</button>
-            </td>
+                <tr>
+                    <td colspan="8" class="empty-message">
+                        No students found.
+                    </td>
+                </tr>
 
-        </form>
-    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    {% endfor %}
-</table>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">
+        Back to Admin Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
+```

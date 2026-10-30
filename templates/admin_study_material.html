@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Material | Admin Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #263238;
+        }
+
+        header {
+            background: #173b70;
+            color: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .welcome, .material-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #0000000d;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1, .section-title {
+            color: #173b70;
+            margin-bottom: 12px;
+        }
+
+        .welcome p, .material-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .materials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 22px;
+        }
+
+        .material-card {
+            border-top: 5px solid #3478d4;
+            transition: 0.2s;
+        }
+
+        .material-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .material-card .icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .material-card h3 {
+            color: #173b70;
+            margin-bottom: 10px;
+        }
+
+        .material-card p {
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eaf1fb;
+            color: #173b70;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .open-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: #173b70;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .open-link:hover {
+            background: #24559a;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            background: #173b70;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        footer {
+            margin-top: 50px;
+            background: #173b70;
+            color: white;
+            text-align: center;
+            padding: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🎓 Smart Student Portal</h2>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <h1>📚 Study Material</h1>
+        <p>Explore study materials for Computer Science students.</p>
+    </section>
+
+    {% if search %}
+        <h2 class="section-title">Search Results</h2>
+        <section class="materials">
+            {% for item in materials %}
+                <div class="material-card">
+                    <h3>{{ item.subject }}</h3>
+                    <p>{{ item.title }}</p>
+                    <p>{{ item.description }}</p>
+                    {% if item.link %}
+                        <a class="open-link" href="{{ item.link }}" target="_blank">Open Material →</a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>No materials found.</p>
+            {% endfor %}
+        </section>
+
+    {% else %}
+        <h2 class="section-title">
+            Available Subjects ({{ subjects|length }})
+        </h2>
+
+        <section class="materials">
+            {% for subject in subjects %}
+                <div class="material-card">
+                    <div class="icon">📚</div>
+                    <h3>{{ subject }}</h3>
+                    <p>Explore {{ subject }} notes and learning resources.</p>
+
+                    <a class="open-link"
+                       href="{{ url_for('admin_study_material', q=subject) }}">
+                        View Materials →
+                    </a>
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <a class="back-btn" href="{{ url_for('admin_dashboard') }}">
+        ← Back to Admin Dashboard
+    </a>
+
+</main>
+
+<footer>
+    © 2026 AI-Powered Smart Student Management Portal
+</footer>
+
+</body>
+</html>
